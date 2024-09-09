@@ -33,8 +33,11 @@ else
     exit 1
 fi
 
+# Set the snapshot to restore (use SNAPSHOT_TO_RESTORE env var if set, otherwise default to 'latest')
+SNAPSHOT="${SNAPSHOT_TO_RESTORE:-latest}"
+
 # Run restic restore
-restic -r rest:http://localhost:8080 restore latest --target /restore
+restic -r rest:http://localhost:8080 restore "$SNAPSHOT" --target /restore
 
 # Keep the container running
 tail -f /dev/null
